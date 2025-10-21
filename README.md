@@ -2,7 +2,7 @@
 
 ![SQL](https://img.shields.io/badge/SQL-MySQL%208.0%2B-4479A1?logo=mysql&logoColor=white) ![License](https://img.shields.io/badge/license-BlackCat%20Proprietary-red) ![Status](https://img.shields.io/badge/status-stable-informational) ![Generated](https://img.shields.io/badge/generated-from%20schema--map-blue)
 
-> Schema package for table **payments** (repo: $slug).
+> Schema package for table **payments** (repo: `payments`).
 
 ## Files
 ```
@@ -45,7 +45,7 @@ mysql -h 127.0.0.1 -P 3307 -u root -proot app < schema/030_foreign_keys.sql
 | gateway | VARCHAR(100) | NO | — |  |
 | transaction_id | VARCHAR(255) | YES | — |  |
 | provider_event_id | VARCHAR(255) | YES | — |  |
-| status | ENUM(''initiated'',''pending'',''authorized'',''paid'',''cancelled'',''partially_refunded'',''refunded'',''failed'') | NO | — |  |
+| status | ENUM('initiated','pending','authorized','paid','cancelled','partially_refunded','refunded','failed') | NO | — |  |
 | amount | DECIMAL(12,2) | NO | — |  |
 | currency | CHAR(3) | NO | — |  |
 | details | JSON | YES | — |  |
@@ -58,17 +58,17 @@ mysql -h 127.0.0.1 -P 3307 -u root -proot app < schema/030_foreign_keys.sql
 ```mermaid
 erDiagram
   PAYMENTS {
-    BIGINT id PK
-    BIGINT order_id
-    VARCHAR(100) gateway
-    VARCHAR(255) transaction_id
-    VARCHAR(255) provider_event_id
-    ENUM(''initiated'',''pending'',''authorized'',''paid'',''cancelled'',''partially_refunded'',''refunded'',''failed'') status
-    DECIMAL(12,2) amount
-    CHAR(3) currency
+    INT id PK
+    INT order_id
+    VARCHAR gateway
+    VARCHAR transaction_id
+    VARCHAR provider_event_id
+    ENUM status
+    DECIMAL amount
+    VARCHAR currency
     JSON details
-    DATETIME(6) created_at
-    DATETIME(6) updated_at
+    DATETIME created_at
+    DATETIME updated_at
   }
   PAYMENTS }o--|| ORDERS : "order_id"
 ```
