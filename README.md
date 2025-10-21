@@ -70,7 +70,7 @@ erDiagram
     DATETIME(6) created_at
     DATETIME(6) updated_at
   }
-  PAYMENTS }o--|| ORDERS : (order_id)
+  PAYMENTS }o--|| ORDERS : "order_id"
 ```
 
 ## Indexes
