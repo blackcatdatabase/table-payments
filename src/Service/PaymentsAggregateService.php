@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace BlackCat\Database\Packages\Payments\Service;
 
-use BlackCat\Core\Database\Database;
+use BlackCat\Core\Database;
 use BlackCat\Database\Packages\Payments\Dto\PaymentDto;
 use BlackCat\Database\Packages\Payments\Mapper\PaymentDtoMapper;
 use BlackCat\Database\Packages\Payments\Repository\PaymentRepository;
