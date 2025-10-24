@@ -6,7 +6,7 @@ namespace BlackCat\Database\Packages\Payments;
 /**
  * Bezpečný builder WHERE/ORDER/LIMIT.
  * - whitelist filtrů: [ 'id', 'order_id', 'gateway', 'transaction_id', 'provider_event_id', 'status', 'amount', 'currency', 'details', 'created_at', 'updated_at' ]
- * - whitelist pro LIKE hledání: [ 'gateway', 'transaction_id', 'provider_event_id', 'currency' ]
+ * - whitelist pro LIKE hledání: [ 'gateway', 'transaction_id', 'provider_event_id', 'status', 'currency' ]
  */
 final class Criteria {
     /** @var array<string,mixed> */
@@ -61,7 +61,7 @@ final class Criteria {
 
         // fulltext/LIKE (přes whitelist)
         if ($this->search !== null) {
-            $searchCols = [ 'gateway', 'transaction_id', 'provider_event_id', 'currency' ];
+            $searchCols = [ 'gateway', 'transaction_id', 'provider_event_id', 'status', 'currency' ];
             $likeParts = [];
             foreach ($searchCols as $i=>$c) {
                 if ($c === '') continue;

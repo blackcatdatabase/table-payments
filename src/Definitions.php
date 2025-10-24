@@ -6,7 +6,7 @@ namespace BlackCat\Database\Packages\Payments;
 final class Definitions {
     // --- základní metadata ---
     public static function table(): string { return 'payments'; }
-    public static function contractView(): string { return 'v_payments_contract'; }
+    public static function contractView(): string { return 'vw_payments'; }
     /** @return string[] */
     public static function columns(): array { return [ 'id', 'order_id', 'gateway', 'transaction_id', 'provider_event_id', 'status', 'amount', 'currency', 'details', 'created_at', 'updated_at' ]; }
     public static function pk(): string { return 'id'; }
