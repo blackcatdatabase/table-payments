@@ -1,8 +1,8 @@
--- Auto-generated from schema-views-postgres.psd1 (map@mtime:2025-10-24T09:45:40Z)
+-- Auto-generated from schema-views-postgres.psd1 (map@38d5403)
 -- engine: postgres
 -- table:  payments
 -- Contract view for [payments]
--- Includes "details" JSON; mask in your app if it can contain sensitive provider payloads.
+-- Includes "details" JSON; mask in your app if needed.
 CREATE OR REPLACE VIEW vw_payments AS
 SELECT
   id,

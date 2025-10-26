@@ -1,4 +1,4 @@
--- Auto-generated from schema-map-postgres.psd1 (map@mtime:2025-10-24T09:46:38Z)
+-- Auto-generated from schema-map-postgres.psd1 (map@38d5403)
 -- engine: postgres
 -- table:  payments
 CREATE TABLE IF NOT EXISTS payments (
@@ -13,6 +13,8 @@ CREATE TABLE IF NOT EXISTS payments (
   details JSONB NULL,
   created_at TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   updated_at TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  version INTEGER NOT NULL DEFAULT 0,
+  CONSTRAINT chk_payments_version CHECK (version >= 0),
   CONSTRAINT uq_payments_transaction_id UNIQUE (transaction_id),
   CONSTRAINT chk_payments_status CHECK (status IN ('initiated','pending','authorized','paid','cancelled','partially_refunded','refunded','failed')),
   CONSTRAINT chk_payments_currency CHECK (currency ~ '^[A-Z]{3}$')
