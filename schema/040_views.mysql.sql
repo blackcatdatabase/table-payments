@@ -1,9 +1,9 @@
--- Auto-generated from schema-views-mysql.psd1 (map@38d5403)
+-- Auto-generated from schema-views-mysql.psd1 (map@c5e4097)
 -- engine: mysql
 -- table:  payments
 -- Contract view for [payments]
 -- Includes "details" JSON; mask in your app if needed.
-CREATE OR REPLACE SQL SECURITY INVOKER VIEW vw_payments AS
+CREATE OR REPLACE ALGORITHM=MERGE SQL SECURITY INVOKER VIEW vw_payments AS
 SELECT
   id,
   order_id,
@@ -15,5 +15,6 @@ SELECT
   currency,
   details,
   created_at,
-  updated_at
+  updated_at,
+  version
 FROM payments;

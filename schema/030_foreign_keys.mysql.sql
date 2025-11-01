@@ -1,4 +1,4 @@
--- Auto-generated from schema-map-mysql.psd1 (map@38d5403)
+-- Auto-generated from schema-map-mysql.psd1 (map@c5e4097)
 -- engine: mysql
 -- table:  payments
 ALTER TABLE payments ADD CONSTRAINT fk_payments_order FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE SET NULL;
