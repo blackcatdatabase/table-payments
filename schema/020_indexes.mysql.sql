@@ -1,4 +1,6 @@
--- Auto-generated from schema-map-mysql.psd1 (map@db2f8b8)
+-- Auto-generated from schema-map-mysql.psd1 (map@62c9c93)
 -- engine: mysql
 -- table:  payments
 CREATE INDEX idx_payments_created_at ON payments (created_at);
+
+CREATE INDEX idx_payments_order_created ON payments (order_id, created_at);
