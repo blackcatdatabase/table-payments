@@ -1,11 +1,14 @@
--- Auto-generated from schema-map-postgres.psd1 (map@62c9c93)
+-- Auto-generated from schema-map-postgres.psd1 (map@mtime:2025-11-21T00:25:46Z)
 -- engine: postgres
 -- table:  payments
+
 CREATE INDEX IF NOT EXISTS idx_payments_order ON payments (order_id);
 
 CREATE INDEX IF NOT EXISTS idx_payments_provider_event ON payments (provider_event_id);
 
 CREATE INDEX IF NOT EXISTS idx_payments_created_at ON payments (created_at);
+
+CREATE INDEX IF NOT EXISTS idx_payments_order_created ON payments (order_id, created_at);
 
 CREATE INDEX IF NOT EXISTS gin_payments_details     ON payments      USING GIN (details jsonb_path_ops);
 
