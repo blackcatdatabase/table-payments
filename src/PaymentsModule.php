@@ -106,7 +106,7 @@ SQL;
         $hasView  = SchemaIntrospector::hasView($db, $d, $view);
 
         // Quick index/FK check â€“ generator injects names (case-sensitive per DB)
-        $expectedIdx = [ 'idx_payments_created_at', 'idx_payments_order_created' ];
+        $expectedIdx = [ 'gin_payments_details', 'idx_payments_created_at', 'idx_payments_order', 'idx_payments_order_created', 'idx_payments_provider_event', 'idx_payments_tenant_order', 'ux_payments_tenant_id', 'ux_payments_tenant_tx' ];
         if ($d->isMysql()) {
             // Drop PG-only index naming patterns (e.g., GIN/GiST)
             $expectedIdx = array_values(array_filter(
@@ -139,7 +139,7 @@ SQL;
             'columns'     => Definitions::columns(),
             'version'     => $this->version(),
             'dialects'    => [ 'mysql', 'postgres' ],
-            'indexes'     => [ 'idx_payments_created_at', 'idx_payments_order_created' ],
+            'indexes'     => [ 'gin_payments_details', 'idx_payments_created_at', 'idx_payments_order', 'idx_payments_order_created', 'idx_payments_provider_event', 'idx_payments_tenant_order', 'ux_payments_tenant_id', 'ux_payments_tenant_tx' ],
             'foreignKeys' => [ 'fk_payments_order', 'fk_payments_tenant' ],
         ];
     }
