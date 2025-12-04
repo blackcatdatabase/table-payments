@@ -13,6 +13,19 @@ GROUP BY gateway, status;
 
 -- Auto-generated from joins-mysql.yaml (map@85230ed)
 -- engine: mysql
+-- view:   payments_recent_failures
+
+CREATE OR REPLACE ALGORITHM=MERGE SQL SECURITY INVOKER VIEW vw_payments_recent_failures AS
+SELECT
+  p.*,
+  TIMESTAMPDIFF(SECOND, p.created_at, NOW()) AS age_sec
+FROM payments p
+WHERE p.status = 'failed'
+  AND p.created_at > NOW() - INTERVAL 24 HOUR;
+
+
+-- Auto-generated from joins-mysql.yaml (map@85230ed)
+-- engine: mysql
 -- view:   payments_anomalies
 
 CREATE OR REPLACE ALGORITHM=MERGE SQL SECURITY INVOKER VIEW vw_payments_anomalies AS
@@ -23,19 +36,6 @@ WHERE
   (status IN ('paid','authorized') AND amount < 0)
   OR (status = 'paid' AND (transaction_id IS NULL OR transaction_id = ''))
   OR (status = 'failed' AND amount > 0);
-
-
--- Auto-generated from joins-mysql.yaml (map@85230ed)
--- engine: mysql
--- view:   payments_recent_failures
-
-CREATE OR REPLACE ALGORITHM=MERGE SQL SECURITY INVOKER VIEW vw_payments_recent_failures AS
-SELECT
-  p.*,
-  TIMESTAMPDIFF(SECOND, p.created_at, NOW()) AS age_sec
-FROM payments p
-WHERE p.status = 'failed'
-  AND p.created_at > NOW() - INTERVAL 24 HOUR;
 
 
 -- Auto-generated from joins-mysql.yaml (map@85230ed)

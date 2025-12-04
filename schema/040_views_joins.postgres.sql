@@ -30,21 +30,6 @@ WHERE
 
 -- Auto-generated from joins-postgres.yaml (map@85230ed)
 -- engine: postgres
--- view:   payments_recent_failures
-
--- Recent failed payments (24h)
-CREATE OR REPLACE VIEW vw_payments_recent_failures AS
-SELECT
-  p.*,
-  EXTRACT(EPOCH FROM (now() - p.created_at)) AS age_sec
-FROM payments p
-WHERE p.status = $$failed$$
-  AND p.created_at > now() - interval $$24 hours$$
-ORDER BY p.created_at DESC;
-
-
--- Auto-generated from joins-postgres.yaml (map@85230ed)
--- engine: postgres
 -- view:   payments_with_logs
 
 -- Payments with last log entry and log count
@@ -62,4 +47,19 @@ SELECT
   (SELECT COUNT(*) FROM payment_logs x WHERE x.payment_id = p.id) AS logs_count
 FROM payments p
 LEFT JOIN ranked_logs rl ON rl.payment_id = p.id AND rl.rn = 1;
+
+
+-- Auto-generated from joins-postgres.yaml (map@85230ed)
+-- engine: postgres
+-- view:   payments_recent_failures
+
+-- Recent failed payments (24h)
+CREATE OR REPLACE VIEW vw_payments_recent_failures AS
+SELECT
+  p.*,
+  EXTRACT(EPOCH FROM (now() - p.created_at)) AS age_sec
+FROM payments p
+WHERE p.status = $$failed$$
+  AND p.created_at > now() - interval $$24 hours$$
+ORDER BY p.created_at DESC;
 
