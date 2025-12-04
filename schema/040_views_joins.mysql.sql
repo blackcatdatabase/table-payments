@@ -1,4 +1,44 @@
--- Auto-generated from joins-mysql.yaml (map@94ebe6c)
+-- Auto-generated from joins-mysql.yaml (map@85230ed)
+-- engine: mysql
+-- view:   payments_recent_failures
+
+CREATE OR REPLACE ALGORITHM=MERGE SQL SECURITY INVOKER VIEW vw_payments_recent_failures AS
+SELECT
+  p.*,
+  TIMESTAMPDIFF(SECOND, p.created_at, NOW()) AS age_sec
+FROM payments p
+WHERE p.status = 'failed'
+  AND p.created_at > NOW() - INTERVAL 24 HOUR;
+
+-- Auto-generated from joins-mysql.yaml (map@85230ed)
+-- engine: mysql
+-- view:   payments_anomalies
+
+CREATE OR REPLACE ALGORITHM=MERGE SQL SECURITY INVOKER VIEW vw_payments_anomalies AS
+SELECT
+  p.*
+FROM payments p
+WHERE
+  (status IN ('paid','authorized') AND amount < 0)
+  OR (status = 'paid' AND (transaction_id IS NULL OR transaction_id = ''))
+  OR (status = 'failed' AND amount > 0);
+
+
+-- Auto-generated from joins-mysql.yaml (map@85230ed)
+-- engine: mysql
+-- view:   payments_status_summary
+
+CREATE OR REPLACE ALGORITHM=TEMPTABLE SQL SECURITY INVOKER VIEW vw_payments_status_summary AS
+SELECT
+  gateway,
+  status,
+  COUNT(*) AS total,
+  SUM(CASE WHEN status IN ('authorized','paid','partially_refunded','refunded') THEN amount ELSE 0 END) AS sum_amount
+FROM payments
+GROUP BY gateway, status;
+
+
+-- Auto-generated from joins-mysql.yaml (map@85230ed)
 -- engine: mysql
 -- view:   payments_with_logs
 
@@ -16,44 +56,4 @@ SELECT
   (SELECT COUNT(*) FROM payment_logs x WHERE x.payment_id = p.id) AS logs_count
 FROM payments p
 LEFT JOIN ranked_logs rl ON rl.payment_id = p.id AND rl.rn = 1;
-
--- Auto-generated from joins-mysql.yaml (map@94ebe6c)
--- engine: mysql
--- view:   payments_status_summary
-
-CREATE OR REPLACE ALGORITHM=TEMPTABLE SQL SECURITY INVOKER VIEW vw_payments_status_summary AS
-SELECT
-  gateway,
-  status,
-  COUNT(*) AS total,
-  SUM(CASE WHEN status IN ('authorized','paid','partially_refunded','refunded') THEN amount ELSE 0 END) AS sum_amount
-FROM payments
-GROUP BY gateway, status;
-
-
--- Auto-generated from joins-mysql.yaml (map@94ebe6c)
--- engine: mysql
--- view:   payments_anomalies
-
-CREATE OR REPLACE ALGORITHM=MERGE SQL SECURITY INVOKER VIEW vw_payments_anomalies AS
-SELECT
-  p.*
-FROM payments p
-WHERE
-  (status IN ('paid','authorized') AND amount < 0)
-  OR (status = 'paid' AND (transaction_id IS NULL OR transaction_id = ''))
-  OR (status = 'failed' AND amount > 0);
-
-
--- Auto-generated from joins-mysql.yaml (map@94ebe6c)
--- engine: mysql
--- view:   payments_recent_failures
-
-CREATE OR REPLACE ALGORITHM=MERGE SQL SECURITY INVOKER VIEW vw_payments_recent_failures AS
-SELECT
-  p.*,
-  TIMESTAMPDIFF(SECOND, p.created_at, NOW()) AS age_sec
-FROM payments p
-WHERE p.status = 'failed'
-  AND p.created_at > NOW() - INTERVAL 24 HOUR;
 
