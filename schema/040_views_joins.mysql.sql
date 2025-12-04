@@ -1,14 +1,15 @@
 -- Auto-generated from joins-mysql.yaml (map@85230ed)
 -- engine: mysql
--- view:   payments_recent_failures
+-- view:   payments_status_summary
 
-CREATE OR REPLACE ALGORITHM=MERGE SQL SECURITY INVOKER VIEW vw_payments_recent_failures AS
+CREATE OR REPLACE ALGORITHM=TEMPTABLE SQL SECURITY INVOKER VIEW vw_payments_status_summary AS
 SELECT
-  p.*,
-  TIMESTAMPDIFF(SECOND, p.created_at, NOW()) AS age_sec
-FROM payments p
-WHERE p.status = 'failed'
-  AND p.created_at > NOW() - INTERVAL 24 HOUR;
+  gateway,
+  status,
+  COUNT(*) AS total,
+  SUM(CASE WHEN status IN ('authorized','paid','partially_refunded','refunded') THEN amount ELSE 0 END) AS sum_amount
+FROM payments
+GROUP BY gateway, status;
 
 -- Auto-generated from joins-mysql.yaml (map@85230ed)
 -- engine: mysql
@@ -26,16 +27,15 @@ WHERE
 
 -- Auto-generated from joins-mysql.yaml (map@85230ed)
 -- engine: mysql
--- view:   payments_status_summary
+-- view:   payments_recent_failures
 
-CREATE OR REPLACE ALGORITHM=TEMPTABLE SQL SECURITY INVOKER VIEW vw_payments_status_summary AS
+CREATE OR REPLACE ALGORITHM=MERGE SQL SECURITY INVOKER VIEW vw_payments_recent_failures AS
 SELECT
-  gateway,
-  status,
-  COUNT(*) AS total,
-  SUM(CASE WHEN status IN ('authorized','paid','partially_refunded','refunded') THEN amount ELSE 0 END) AS sum_amount
-FROM payments
-GROUP BY gateway, status;
+  p.*,
+  TIMESTAMPDIFF(SECOND, p.created_at, NOW()) AS age_sec
+FROM payments p
+WHERE p.status = 'failed'
+  AND p.created_at > NOW() - INTERVAL 24 HOUR;
 
 
 -- Auto-generated from joins-mysql.yaml (map@85230ed)

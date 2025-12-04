@@ -1,16 +1,17 @@
 -- Auto-generated from joins-postgres.yaml (map@85230ed)
 -- engine: postgres
--- view:   payments_recent_failures
+-- view:   payments_status_summary
 
--- Recent failed payments (24h)
-CREATE OR REPLACE VIEW vw_payments_recent_failures AS
+-- Payment status summary by gateway
+CREATE OR REPLACE VIEW vw_payments_status_summary AS
 SELECT
-  p.*,
-  EXTRACT(EPOCH FROM (now() - p.created_at)) AS age_sec
-FROM payments p
-WHERE p.status = $$failed$$
-  AND p.created_at > now() - interval $$24 hours$$
-ORDER BY p.created_at DESC;
+  gateway,
+  status,
+  COUNT(*) AS total,
+  SUM(CASE WHEN status IN ($$authorized$$,$$paid$$,$$partially_refunded$$,$$refunded$$) THEN amount ELSE 0 END) AS sum_amount
+FROM payments
+GROUP BY gateway, status
+ORDER BY gateway, status;
 
 -- Auto-generated from joins-postgres.yaml (map@85230ed)
 -- engine: postgres
@@ -29,18 +30,17 @@ WHERE
 
 -- Auto-generated from joins-postgres.yaml (map@85230ed)
 -- engine: postgres
--- view:   payments_status_summary
+-- view:   payments_recent_failures
 
--- Payment status summary by gateway
-CREATE OR REPLACE VIEW vw_payments_status_summary AS
+-- Recent failed payments (24h)
+CREATE OR REPLACE VIEW vw_payments_recent_failures AS
 SELECT
-  gateway,
-  status,
-  COUNT(*) AS total,
-  SUM(CASE WHEN status IN ($$authorized$$,$$paid$$,$$partially_refunded$$,$$refunded$$) THEN amount ELSE 0 END) AS sum_amount
-FROM payments
-GROUP BY gateway, status
-ORDER BY gateway, status;
+  p.*,
+  EXTRACT(EPOCH FROM (now() - p.created_at)) AS age_sec
+FROM payments p
+WHERE p.status = $$failed$$
+  AND p.created_at > now() - interval $$24 hours$$
+ORDER BY p.created_at DESC;
 
 
 -- Auto-generated from joins-postgres.yaml (map@85230ed)
