@@ -1,18 +1,5 @@
 -- Auto-generated from joins-mysql.yaml (map@85230ed)
 -- engine: mysql
--- view:   payments_anomalies
-
-CREATE OR REPLACE ALGORITHM=MERGE SQL SECURITY INVOKER VIEW vw_payments_anomalies AS
-SELECT
-  p.*
-FROM payments p
-WHERE
-  (status IN ('paid','authorized') AND amount < 0)
-  OR (status = 'paid' AND (transaction_id IS NULL OR transaction_id = ''))
-  OR (status = 'failed' AND amount > 0);
-
--- Auto-generated from joins-mysql.yaml (map@85230ed)
--- engine: mysql
 -- view:   payments_recent_failures
 
 CREATE OR REPLACE ALGORITHM=MERGE SQL SECURITY INVOKER VIEW vw_payments_recent_failures AS
@@ -22,7 +9,6 @@ SELECT
 FROM payments p
 WHERE p.status = 'failed'
   AND p.created_at > NOW() - INTERVAL 24 HOUR;
-
 
 -- Auto-generated from joins-mysql.yaml (map@85230ed)
 -- engine: mysql
@@ -36,6 +22,20 @@ SELECT
   SUM(CASE WHEN status IN ('authorized','paid','partially_refunded','refunded') THEN amount ELSE 0 END) AS sum_amount
 FROM payments
 GROUP BY gateway, status;
+
+
+-- Auto-generated from joins-mysql.yaml (map@85230ed)
+-- engine: mysql
+-- view:   payments_anomalies
+
+CREATE OR REPLACE ALGORITHM=MERGE SQL SECURITY INVOKER VIEW vw_payments_anomalies AS
+SELECT
+  p.*
+FROM payments p
+WHERE
+  (status IN ('paid','authorized') AND amount < 0)
+  OR (status = 'paid' AND (transaction_id IS NULL OR transaction_id = ''))
+  OR (status = 'failed' AND amount > 0);
 
 
 -- Auto-generated from joins-mysql.yaml (map@85230ed)
