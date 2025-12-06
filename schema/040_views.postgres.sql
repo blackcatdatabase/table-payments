@@ -1,6 +1,7 @@
--- Auto-generated from schema-views-postgres.psd1 (map@62c9c93)
+-- Auto-generated from schema-views-postgres.yaml (map@sha1:EDC13878AE5F346E7EAD2CF0A484FEB7E68F6CDD)
 -- engine: postgres
 -- table:  payments
+
 -- Contract view for [payments]
 -- Includes "details" JSON; mask in your app if needed.
 CREATE OR REPLACE VIEW vw_payments AS
