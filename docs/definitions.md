@@ -5,17 +5,17 @@ Payment attempts and final captures for orders.
 ## Columns
 | Column | Type | Null | Default | Description |
 | --- | --- | --- | --- | --- |
-| amount | NUMERIC(12,2) | NO |  | Payment amount. Must be >= 0. |
-| created_at | TIMESTAMPTZ(6) | NO | CURRENT_TIMESTAMP(6) | Creation timestamp (UTC). |
+| amount | DECIMAL(12,2) | NO |  | Payment amount. Must be >= 0. |
+| created_at | DATETIME(6) | NO | CURRENT_TIMESTAMP(6) | Creation timestamp (UTC). |
 | currency | CHAR(3) | NO |  | ISO 4217 currency code. |
-| details | JSONB | YES |  | JSON with provider details/receipts. |
+| details | JSON | YES |  | JSON with provider details/receipts. |
 | gateway | VARCHAR(100) | NO |  | Payment gateway key (e.g., stripe, gopay). |
 | id | BIGINT | NO |  | Surrogate primary key. |
 | order_id | BIGINT | YES |  | Order (FK orders.id). |
 | provider_event_id | VARCHAR(255) | YES |  | Provider event id (optional). |
-| status | TEXT | NO |  | Payment state. (enum: initiated, pending, authorized, paid, cancelled, partially_refunded, refunded, failed) |
+| status | ENUM('initiated','pending','authorized','paid','cancelled','partially_refunded','refunded','failed') | NO |  | Payment state. (enum: initiated, pending, authorized, paid, cancelled, partially_refunded, refunded, failed) |
 | transaction_id | VARCHAR(255) | YES |  | Provider transaction id (unique if provided). |
-| updated_at | TIMESTAMPTZ(6) | NO | CURRENT_TIMESTAMP(6) | Update timestamp (UTC). |
+| updated_at | DATETIME(6) | NO | CURRENT_TIMESTAMP(6) | Update timestamp (UTC). |
 
 ## Engine Details
 
@@ -77,13 +77,13 @@ Foreign keys:
 ## Views
 | View | Engine | Flags | File |
 | --- | --- | --- | --- |
-| vw_payments | mysql | algorithm=MERGE, security=INVOKER | [packages\payments\schema\040_views.mysql.sql](https://github.com/blackcatacademy/blackcat-database/packages/payments/schema/040_views.mysql.sql) |
-| vw_payments_anomalies | mysql | algorithm=MERGE, security=INVOKER | [packages\payments\schema\040_views_joins.mysql.sql](https://github.com/blackcatacademy/blackcat-database/packages/payments/schema/040_views_joins.mysql.sql) |
-| vw_payments_recent_failures | mysql | algorithm=MERGE, security=INVOKER | [packages\payments\schema\040_views_joins.mysql.sql](https://github.com/blackcatacademy/blackcat-database/packages/payments/schema/040_views_joins.mysql.sql) |
-| vw_payments_status_summary | mysql | algorithm=MERGE, security=INVOKER | [packages\payments\schema\040_views_joins.mysql.sql](https://github.com/blackcatacademy/blackcat-database/packages/payments/schema/040_views_joins.mysql.sql) |
-| vw_payments_with_logs | mysql | algorithm=MERGE, security=INVOKER | [packages\payments\schema\040_views_joins.mysql.sql](https://github.com/blackcatacademy/blackcat-database/packages/payments/schema/040_views_joins.mysql.sql) |
-| vw_payments | postgres |  | [packages\payments\schema\040_views.postgres.sql](https://github.com/blackcatacademy/blackcat-database/packages/payments/schema/040_views.postgres.sql) |
-| vw_payments_anomalies | postgres |  | [packages\payments\schema\040_views_joins.postgres.sql](https://github.com/blackcatacademy/blackcat-database/packages/payments/schema/040_views_joins.postgres.sql) |
-| vw_payments_recent_failures | postgres |  | [packages\payments\schema\040_views_joins.postgres.sql](https://github.com/blackcatacademy/blackcat-database/packages/payments/schema/040_views_joins.postgres.sql) |
-| vw_payments_status_summary | postgres |  | [packages\payments\schema\040_views_joins.postgres.sql](https://github.com/blackcatacademy/blackcat-database/packages/payments/schema/040_views_joins.postgres.sql) |
-| vw_payments_with_logs | postgres |  | [packages\payments\schema\040_views_joins.postgres.sql](https://github.com/blackcatacademy/blackcat-database/packages/payments/schema/040_views_joins.postgres.sql) |
+| vw_payments | mysql | algorithm=MERGE, security=INVOKER | [schema\040_views.mysql.sql](schema\040_views.mysql.sql) |
+| vw_payments_anomalies | mysql | algorithm=MERGE, security=INVOKER | [schema\040_views_joins.mysql.sql](schema\040_views_joins.mysql.sql) |
+| vw_payments_recent_failures | mysql | algorithm=MERGE, security=INVOKER | [schema\040_views_joins.mysql.sql](schema\040_views_joins.mysql.sql) |
+| vw_payments_status_summary | mysql | algorithm=MERGE, security=INVOKER | [schema\040_views_joins.mysql.sql](schema\040_views_joins.mysql.sql) |
+| vw_payments_with_logs | mysql | algorithm=MERGE, security=INVOKER | [schema\040_views_joins.mysql.sql](schema\040_views_joins.mysql.sql) |
+| vw_payments | postgres |  | [schema\040_views.postgres.sql](schema\040_views.postgres.sql) |
+| vw_payments_anomalies | postgres |  | [schema\040_views_joins.postgres.sql](schema\040_views_joins.postgres.sql) |
+| vw_payments_recent_failures | postgres |  | [schema\040_views_joins.postgres.sql](schema\040_views_joins.postgres.sql) |
+| vw_payments_status_summary | postgres |  | [schema\040_views_joins.postgres.sql](schema\040_views_joins.postgres.sql) |
+| vw_payments_with_logs | postgres |  | [schema\040_views_joins.postgres.sql](schema\040_views_joins.postgres.sql) |
