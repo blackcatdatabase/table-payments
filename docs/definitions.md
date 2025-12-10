@@ -77,13 +77,13 @@ Foreign keys:
 ## Views
 | View | Engine | Flags | File |
 | --- | --- | --- | --- |
-| vw_payments | mysql | algorithm=MERGE, security=INVOKER | [schema\040_views.mysql.sql](schema\040_views.mysql.sql) |
-| vw_payments_anomalies | mysql | algorithm=MERGE, security=INVOKER | [schema\040_views_joins.mysql.sql](schema\040_views_joins.mysql.sql) |
-| vw_payments_recent_failures | mysql | algorithm=MERGE, security=INVOKER | [schema\040_views_joins.mysql.sql](schema\040_views_joins.mysql.sql) |
-| vw_payments_status_summary | mysql | algorithm=MERGE, security=INVOKER | [schema\040_views_joins.mysql.sql](schema\040_views_joins.mysql.sql) |
-| vw_payments_with_logs | mysql | algorithm=MERGE, security=INVOKER | [schema\040_views_joins.mysql.sql](schema\040_views_joins.mysql.sql) |
-| vw_payments | postgres |  | [schema\040_views.postgres.sql](schema\040_views.postgres.sql) |
-| vw_payments_anomalies | postgres |  | [schema\040_views_joins.postgres.sql](schema\040_views_joins.postgres.sql) |
-| vw_payments_recent_failures | postgres |  | [schema\040_views_joins.postgres.sql](schema\040_views_joins.postgres.sql) |
-| vw_payments_status_summary | postgres |  | [schema\040_views_joins.postgres.sql](schema\040_views_joins.postgres.sql) |
-| vw_payments_with_logs | postgres |  | [schema\040_views_joins.postgres.sql](schema\040_views_joins.postgres.sql) |
+| vw_payments | mysql | algorithm=MERGE, security=INVOKER | [../schema/040_views.mysql.sql](../schema/040_views.mysql.sql) |
+| vw_payments_anomalies | mysql | algorithm=MERGE, security=INVOKER | [../schema/040_views_joins.mysql.sql](../schema/040_views_joins.mysql.sql) |
+| vw_payments_recent_failures | mysql | algorithm=MERGE, security=INVOKER | [../schema/040_views_joins.mysql.sql](../schema/040_views_joins.mysql.sql) |
+| vw_payments_status_summary | mysql | algorithm=MERGE, security=INVOKER | [../schema/040_views_joins.mysql.sql](../schema/040_views_joins.mysql.sql) |
+| vw_payments_with_logs | mysql | algorithm=MERGE, security=INVOKER | [../schema/040_views_joins.mysql.sql](../schema/040_views_joins.mysql.sql) |
+| vw_payments | postgres |  | [../schema/040_views.postgres.sql](../schema/040_views.postgres.sql) |
+| vw_payments_anomalies | postgres |  | [../schema/040_views_joins.postgres.sql](../schema/040_views_joins.postgres.sql) |
+| vw_payments_recent_failures | postgres |  | [../schema/040_views_joins.postgres.sql](../schema/040_views_joins.postgres.sql) |
+| vw_payments_status_summary | postgres |  | [../schema/040_views_joins.postgres.sql](../schema/040_views_joins.postgres.sql) |
+| vw_payments_with_logs | postgres |  | [../schema/040_views_joins.postgres.sql](../schema/040_views_joins.postgres.sql) |
