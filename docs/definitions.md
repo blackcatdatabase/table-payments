@@ -5,16 +5,16 @@ Payment attempts and final captures for orders.
 ## Columns
 | Column | Type | Null | Default | Description |
 | --- | --- | --- | --- | --- |
-| amount | mysql: DECIMAL(12,2) / postgres: NUMERIC(12,2) | NO |  | Payment amount. Must be >= 0. |
-| created_at | mysql: DATETIME(6) / postgres: TIMESTAMPTZ(6) | NO | CURRENT_TIMESTAMP(6) | Creation timestamp (UTC). |
-| currency | CHAR(3) | NO |  | ISO 4217 currency code. |
-| details | mysql: JSON / postgres: JSONB | YES |  | JSON with provider details/receipts. |
-| gateway | VARCHAR(100) | NO |  | Payment gateway key (e.g., stripe, gopay). |
 | id | BIGINT | NO |  | Surrogate primary key. |
 | order_id | BIGINT | YES |  | Order (FK orders.id). |
+| gateway | VARCHAR(100) | NO |  | Payment gateway key (e.g., stripe, gopay). |
+| transaction_id | VARCHAR(255) | YES |  | Provider transaction id (unique if provided). |
 | provider_event_id | VARCHAR(255) | YES |  | Provider event id (optional). |
 | status | mysql: ENUM('initiated','pending','authorized','paid','cancelled','partially_refunded','refunded','failed') / postgres: TEXT | NO |  | Payment state. (enum: initiated, pending, authorized, paid, cancelled, partially_refunded, refunded, failed) |
-| transaction_id | VARCHAR(255) | YES |  | Provider transaction id (unique if provided). |
+| amount | mysql: DECIMAL(12,2) / postgres: NUMERIC(12,2) | NO |  | Payment amount. Must be >= 0. |
+| currency | CHAR(3) | NO |  | ISO 4217 currency code. |
+| details | mysql: JSON / postgres: JSONB | YES |  | JSON with provider details/receipts. |
+| created_at | mysql: DATETIME(6) / postgres: TIMESTAMPTZ(6) | NO | CURRENT_TIMESTAMP(6) | Creation timestamp (UTC). |
 | updated_at | mysql: DATETIME(6) / postgres: TIMESTAMPTZ(6) | NO | CURRENT_TIMESTAMP(6) | Update timestamp (UTC). |
 
 ## Engine Details
