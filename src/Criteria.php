@@ -41,11 +41,11 @@ final class Criteria extends BaseCriteria
         return [ 'gateway', 'transaction_id', 'provider_event_id', 'currency' ];
     }
 
-/** Columns allowed in ORDER BY (falls back to filterable() when empty). */
-protected function sortable(): array
-{
-    return [ 'id', 'tenant_id', 'order_id', 'gateway', 'transaction_id', 'provider_event_id', 'status', 'amount', 'currency', 'created_at', 'updated_at', 'version' ];
-}
+    /** Columns allowed in ORDER BY (falls back to filterable() when empty). */
+    protected function sortable(): array
+    {
+        return [ 'id', 'tenant_id', 'order_id', 'gateway', 'transaction_id', 'provider_event_id', 'status', 'amount', 'currency', 'created_at', 'updated_at', 'version' ];
+    }
 
     /**
      * Whitelist of joinable entities (for safe ->join() usage):

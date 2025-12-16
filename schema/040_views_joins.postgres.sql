@@ -1,4 +1,4 @@
--- Auto-generated from joins-postgres.yaml (map@sha1:29CF395A3A4C8964482083733F8E613ABFBEF5CC)
+-- Auto-generated from core\joins-postgres.yaml (map@sha1:29CF395A3A4C8964482083733F8E613ABFBEF5CC)
 -- engine: postgres
 -- view:   payments_anomalies
 
@@ -12,7 +12,7 @@ WHERE
   OR (status = $$paid$$ AND (transaction_id IS NULL OR transaction_id = ''))
   OR (status = $$failed$$ AND amount > 0);
 
--- Auto-generated from joins-postgres.yaml (map@sha1:29CF395A3A4C8964482083733F8E613ABFBEF5CC)
+-- Auto-generated from core\joins-postgres.yaml (map@sha1:29CF395A3A4C8964482083733F8E613ABFBEF5CC)
 -- engine: postgres
 -- view:   payments_recent_failures
 
@@ -27,7 +27,7 @@ WHERE p.status = $$failed$$
 ORDER BY p.created_at DESC;
 
 
--- Auto-generated from joins-postgres.yaml (map@sha1:29CF395A3A4C8964482083733F8E613ABFBEF5CC)
+-- Auto-generated from core\joins-postgres.yaml (map@sha1:29CF395A3A4C8964482083733F8E613ABFBEF5CC)
 -- engine: postgres
 -- view:   payments_status_summary
 
@@ -43,7 +43,7 @@ GROUP BY gateway, status
 ORDER BY gateway, status;
 
 
--- Auto-generated from joins-postgres.yaml (map@sha1:29CF395A3A4C8964482083733F8E613ABFBEF5CC)
+-- Auto-generated from core\joins-postgres.yaml (map@sha1:29CF395A3A4C8964482083733F8E613ABFBEF5CC)
 -- engine: postgres
 -- view:   payments_with_logs
 
