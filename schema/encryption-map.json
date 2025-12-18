@@ -1,0 +1,47 @@
+{
+  "tables": {
+    "payments": {
+      "columns": {
+        "amount": {
+          "strategy": "passthrough"
+        },
+        "created_at": {
+          "strategy": "passthrough"
+        },
+        "currency": {
+          "strategy": "passthrough"
+        },
+        "details": {
+          "strategy": "passthrough"
+        },
+        "gateway": {
+          "strategy": "passthrough"
+        },
+        "id": {
+          "strategy": "passthrough"
+        },
+        "order_id": {
+          "strategy": "passthrough"
+        },
+        "provider_event_id": {
+          "strategy": "passthrough"
+        },
+        "status": {
+          "strategy": "passthrough"
+        },
+        "tenant_id": {
+          "strategy": "passthrough"
+        },
+        "transaction_id": {
+          "strategy": "passthrough"
+        },
+        "updated_at": {
+          "strategy": "passthrough"
+        },
+        "version": {
+          "strategy": "passthrough"
+        }
+      }
+    }
+  }
+}
