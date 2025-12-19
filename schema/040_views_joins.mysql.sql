@@ -1,4 +1,17 @@
--- Auto-generated from joins-mysql.yaml (map@sha1:DA70105A5B799F72A56FEAB71A5171F946A770D2)
+-- Auto-generated from core/joins-mysql.yaml (map@sha1:DA70105A5B799F72A56FEAB71A5171F946A770D2)
+-- engine: mysql
+-- view:   payments_anomalies
+
+CREATE OR REPLACE ALGORITHM=MERGE SQL SECURITY INVOKER VIEW vw_payments_anomalies AS
+SELECT
+  p.*
+FROM payments p
+WHERE
+  (status IN ('paid','authorized') AND amount < 0)
+  OR (status = 'paid' AND (transaction_id IS NULL OR transaction_id = ''))
+  OR (status = 'failed' AND amount > 0);
+
+-- Auto-generated from core/joins-mysql.yaml (map@sha1:DA70105A5B799F72A56FEAB71A5171F946A770D2)
 -- engine: mysql
 -- view:   payments_anomalies
 
@@ -24,7 +37,7 @@ WHERE p.status = 'failed'
   AND p.created_at > NOW() - INTERVAL 24 HOUR;
 
 
--- Auto-generated from joins-mysql.yaml (map@sha1:DA70105A5B799F72A56FEAB71A5171F946A770D2)
+-- Auto-generated from core/joins-mysql.yaml (map@sha1:DA70105A5B799F72A56FEAB71A5171F946A770D2)
 -- engine: mysql
 -- view:   payments_status_summary
 
@@ -38,7 +51,7 @@ FROM payments
 GROUP BY gateway, status;
 
 
--- Auto-generated from joins-mysql.yaml (map@sha1:DA70105A5B799F72A56FEAB71A5171F946A770D2)
+-- Auto-generated from core/joins-mysql.yaml (map@sha1:DA70105A5B799F72A56FEAB71A5171F946A770D2)
 -- engine: mysql
 -- view:   payments_with_logs
 
